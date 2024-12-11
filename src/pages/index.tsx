@@ -21,8 +21,8 @@ export default () => (
             <span dangerouslySetInnerHTML={{ __html: Logo('main') }} />
 
             <h1 style={h1}>
-                <span style={{ color: '#202420' }}>Package</span>
-                <span style={{ color: '#16864d' }}>Phobia</span>
+                <span style={{ color: 'var(--foreground)' }}>Package</span>
+                <span style={{ color: 'var(--brand-color)' }}>Phobia</span>
             </h1>
 
             <p style={{ textAlign: 'center' }}>
@@ -34,7 +34,7 @@ export default () => (
             <form
                 style={{ marginTop: '30px' }}
                 method="post"
-                action={pages.compare}
+                action={pages.scanResults}
                 encType="multipart/form-data"
             >
                 <label>

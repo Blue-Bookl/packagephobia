@@ -3,7 +3,6 @@
 # Package Phobia
 [![tests](https://github.com/styfle/packagephobia/workflows/Tests/badge.svg)](https://github.com/styfle/packagephobia/actions?workflow=Tests)
 ![uptime](https://badgen.net/uptime-robot/week/m783908968-e68af1e88fe9d03309911b73)
-[![style: prettier](https://badgen.net/badge/style/prettier/ff69b4)](https://github.com/prettier/prettier)
 
 <a href="https://turnoff.us/geek/npm-install/"><img src="https://turnoff.us/image/en/npm-install.png" width="300" height="400" align="right" /></a>
 
@@ -37,7 +36,7 @@ A good use case might be comparing test runners, web frameworks, or even bundler
 - Site Generators: [gatsby](https://packagephobia.com/result?p=gatsby) vs [next](https://packagephobia.com/result?p=next)
 - Type Checkers: [typescript](https://packagephobia.com/result?p=typescript) vs [flow-bin](https://packagephobia.com/result?p=flow-bin)
 - Linters: [eslint](https://packagephobia.com/result?p=eslint) vs [jslint](https://packagephobia.com/result?p=jslint)
-- Color Formatters: [chalk](https://packagephobia.com/result?p=chalk) vs [colorette](https://packagephobia.com/result?p=colorette)
+- Color Formatters: [chalk](https://packagephobia.com/result?p=chalk) vs [picocolors](https://packagephobia.com/result?p=picocolors)
 - Command Line Interfaces: [@angular/cli](https://packagephobia.com/result?p=%40angular%2Fcli) vs [@babel/cli](https://packagephobia.com/result?p=%40babel%2Fcli)
 - Desktop Frameworks: [nw](https://packagephobia.com/result?p=nw) vs [electron](https://packagephobia.com/result?p=electron)
 - Headless Browsers: [puppeteer](https://packagephobia.com/result?p=puppeteer) vs [chrome-aws-lambda](https://packagephobia.com/result?p=chrome-aws-lambda)
@@ -58,6 +57,7 @@ Package Phobia is inspired by [Bundle Phobia](https://github.com/pastelsky/bundl
 - [Package Phobia](https://packagephobia.com) **THIS TOOL** web app that reports the install size of a package over time.
 - [Bundle Phobia](https://bundlephobia.com) web app that reports the size after webpack bundles the package over time.
 - [Bundle.js](https://bundlejs.com) web app that reports the size after esbuild bundles the custom code snippet.
+- [Pkg-Size](https://pkg-size.dev) web app that reports the size after esbuild bundles one or more packages.
 - [Cost Of Modules](https://github.com/siddharthkp/cost-of-modules) cli that reports the size of your currently installed packages.
 - [Badge Size](https://github.com/ngryman/badge-size) badge service that reports the gzip size of a single file from a package as svg.
 - [Size Limit](https://github.com/ai/size-limit) cli that fails if the bundled (or non-bundled) size of your app is too large.
@@ -112,6 +112,7 @@ Hopefully, this would lead to publishers taking notice of their bloated packages
 - [webpack-cli@3.0.0 is 4x smaller](https://twitter.com/styfle/status/1006605750981021697)
 - [v8n@1.1.1 is 11x smaller](https://twitter.com/styfle/status/1022433043498364931)
 - [now@13.0.0-canary.6 is 2x smaller](https://twitter.com/styfle/status/1064512498706116617)
+- [typescript@5.0.0-beta is 41% smaller](https://twitter.com/styfle/status/1619058702753071105)
 
 ## npm dependencies in the media
 

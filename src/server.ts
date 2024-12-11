@@ -8,6 +8,8 @@ import { getApiResponseSize, getBadgeSvg } from './util/badge';
 import { parsePackageString } from './util/npm-parser';
 import semver from 'semver';
 import { fetchManifest } from './util/npm-api';
+import { NotFoundError } from './util/not-found-error';
+import type { ApiResponseV1, ApiResponseV2, PackageJson } from './types';
 
 const { TMPDIR = '/tmp', GA_ID = '', NODE_ENV } = process.env;
 process.env.HOME = TMPDIR;
@@ -24,9 +26,28 @@ console.log('TMPDIR: ', TMPDIR);
 console.log('HOME: ', process.env.HOME);
 console.log('AWS_SECRET_ACCESS_KEY: ', process.env.AWS_SECRET_ACCESS_KEY);
 
+let botCount = 0;
+
 export async function handler(req: IncomingMessage, res: ServerResponse) {
     let { method, url, headers } = req;
+    const userAgent = headers['user-agent'] || '';
     console.log(`${method} ${headers.host}${url}`);
+    console.log(`user-agent: ${userAgent}`);
+    if (
+        !userAgent ||
+        userAgent.startsWith('node') ||
+        userAgent.startsWith('axios') ||
+        userAgent.startsWith('got')
+    ) {
+        botCount++;
+        if (botCount % 2 === 0) {
+            res.statusCode = 429;
+            res.end(
+                'Too many requests from unknown user-agent. See https://github.com/styfle/packagephobia/blob/main/API.md',
+            );
+            return;
+        }
+    }
     let { pathname = '/', query = {} } = parse(url || '', true);
     if (!pathname || pathname === '/') {
         pathname = pages.index;
@@ -35,7 +56,13 @@ export async function handler(req: IncomingMessage, res: ServerResponse) {
     try {
         if (pathname === pages.badge) {
             const parsed = parsePackageString(query.p as string);
-            const manifest = await fetchManifest(parsed.name);
+            let manifest;
+            try {
+                manifest = await fetchManifest(parsed.name);
+            } catch (err) {
+                if (err instanceof NotFoundError) manifest = null;
+                else throw err;
+            }
             const { pkgSize, cacheResult } = await getPkgDetails(
                 manifest,
                 parsed.name,
@@ -44,7 +71,7 @@ export async function handler(req: IncomingMessage, res: ServerResponse) {
                 TMPDIR,
             );
             res.setHeader('Content-Type', mimeType('*.svg'));
-            res.setHeader('Cache-Control', cacheControl(isProd, cacheResult ? 7 : 0));
+            res.setHeader('Cache-Control', cacheControl(isProd, cacheResult ? 31 : 0));
             res.end(getBadgeSvg(pkgSize));
         } else if (pathname === pages.apiv1 || pathname === pages.apiv2) {
             const parsed = parsePackageString(query.p as string);
@@ -67,9 +94,9 @@ export async function handler(req: IncomingMessage, res: ServerResponse) {
             }
             res.statusCode = version === versionUnknown ? 404 : 200;
             res.setHeader('Content-Type', mimeType(pathname));
-            res.setHeader('Cache-Control', cacheControl(isProd, cacheResult ? 7 : 0));
+            res.setHeader('Cache-Control', cacheControl(isProd, cacheResult ? 31 : 0));
             res.end(JSON.stringify(result));
-        } else if (pathname === pages.compare) {
+        } else if (pathname === pages.scanResults) {
             let data: Buffer[] = [];
             req.on('data', chunk => data.push(chunk));
             req.on('end', () => {
@@ -94,7 +121,7 @@ export async function handler(req: IncomingMessage, res: ServerResponse) {
             const hasVersion =
                 typeof query.p === 'string' && parsePackageString(query.p).version !== null;
             res.setHeader('Content-Type', mimeType('*.html'));
-            res.setHeader('Cache-Control', cacheControl(isProd, isIndex || hasVersion ? 7 : 0));
+            res.setHeader('Cache-Control', cacheControl(isProd, isIndex || hasVersion ? 31 : 0));
             renderPage(res, pathname, query, TMPDIR, GA_ID);
         }
     } catch (e) {

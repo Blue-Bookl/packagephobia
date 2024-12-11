@@ -30,11 +30,10 @@ Create a `.env` file in the root directory.
 ```
 # required settings
 REDIS_URL="redis://127.0.0.1:6379"
-GA_ID=""
 
 # optional settings
-export PORT="3000"
-export NPM_REGISTRY_URL="https://registry.npmjs.com"
+PORT="3000"
+NPM_REGISTRY_URL="https://registry.npmjs.com"
 ```
 
 ## Running the code
@@ -59,7 +58,7 @@ Now the web app should be available at http://localhost:3000
 Make sure the tests are passing.
 
 ```
-yarn run test
+npm run test
 ```
 
 ## Deploying the code
@@ -75,6 +74,6 @@ Then you can simply run `vercel` to deploy.
 Wow you're doing great! Before you submit a Pull Request, please create an issue so that we can discuss the problem you are solving. When we're all on the same page, make sure you test the code and prettify the code. And please add additional tests if possible.
 
 ```sh
-yarn run test
-yarn run prettier
+npm run test
+npm run prettier
 ```

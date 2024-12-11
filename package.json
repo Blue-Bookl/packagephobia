@@ -2,33 +2,33 @@
   "name": "packagephobia",
   "private": true,
   "engines": {
-    "node": "16.x"
+    "node": "22.x"
   },
   "scripts": {
     "prettier": "prettier \"./**/*.ts\" \"./**/*.tsx\" --write",
-    "git-pre-commit": "yarn run prettier && git add -A",
-    "lint": "yarn run prettier && git diff --exit-code",
-    "test": "tsc && rm -f test/hardlink/link && ln test/hardlink/orig.txt test/hardlink/link && node--test dist/test/",
-    "postinstall": "cp .yarn/releases/yarn-3.2.1.cjs public/yarn.js"
+    "git-pre-commit": "npm run prettier && git add -A",
+    "lint": "npm run prettier && git diff --exit-code",
+    "test": "tsc && rm -f test/hardlink/link && ln test/hardlink/orig.txt test/hardlink/link && node --test"
   },
   "repository": "styfle/packagephobia",
   "author": "styfle",
   "license": "MIT",
   "dependencies": {
-    "badgen": "^3.2.2",
-    "ioredis": "^5.1.0",
+    "badgen": "^3.2.3",
+    "ioredis": "^5.4.1",
+    "lru-cache": "^10.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "semver": "^7.3.7"
+    "semver": "^7.6.0"
   },
   "devDependencies": {
-    "@types/node": "^16.11.42",
-    "@types/react": "^18.0.14",
-    "@types/react-dom": "^18.0.5",
-    "@types/semver": "^7.3.10",
-    "prettier": "^2.7.1",
-    "test": "^3.0.1",
-    "typescript": "^4.7.4"
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "@types/semver": "^7.5.8",
+    "npm": "^10.4.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5"
   },
-  "packageManager": "yarn@3.2.1"
+  "packageManager": "npm@10.9.0"
 }

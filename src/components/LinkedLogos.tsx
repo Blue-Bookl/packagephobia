@@ -1,6 +1,7 @@
 import React from 'react';
 import { escape } from 'querystring';
 import LinkedLogo from './LinkedLogo';
+import type { PkgSize } from '../types';
 
 interface Props {
     pkgSize: PkgSize;
@@ -13,6 +14,13 @@ export default (props: Props) => {
 
     return (
         <>
+            <LinkedLogo
+                name={name}
+                icon="github"
+                color="#333"
+                title="github"
+                href={`https://ghub.io/${name}`}
+            />
             <LinkedLogo
                 name={name}
                 icon="npm"
@@ -64,8 +72,8 @@ export default (props: Props) => {
                 title="graph"
                 href={
                     isLatest
-                        ? `https://npm.anvaka.com/#/view/2d/${escape(escape(name))}`
-                        : `https://npm.anvaka.com/#/view/2d/${escape(escape(name))}/${version}`
+                        ? `https://npmgraph.js.org/?q=${name}#sizing`
+                        : `https://npmgraph.js.org/?q=${name}@${version}#sizing`
                 }
             />
         </>

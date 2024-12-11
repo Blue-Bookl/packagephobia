@@ -7,6 +7,7 @@ import { getBadgeUrl } from '../util/badge';
 import { Stat } from '../components/Stats';
 import SearchBar from '../components/SearchBar';
 import Sponsors from '../components/Sponsors';
+import type { CompareProps } from '../types';
 
 export default ({ inputStr, results }: CompareProps) => {
     const resultsToPrint = results.map(({ pkgSize, isLatest }) => {
@@ -52,7 +53,7 @@ export default ({ inputStr, results }: CompareProps) => {
                                                     unit=""
                                                     label={result.version}
                                                     scale={0.75}
-                                                    color="#16864d"
+                                                    color="var(--brand-color)"
                                                     textAlign="right"
                                                 />
                                             </a>

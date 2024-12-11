@@ -1,8 +1,9 @@
 import { isFullRelease } from '../util/npm-parser';
 import { findAll } from '../util/backend/db';
-import { getAllDistTags, getVersionsForChart, getPublishDate } from '../util/npm-api';
+import { getAllDistTags, getVersionsForChart } from '../util/npm-api';
 import { getPkgDetails } from './common';
 import { NotFoundError } from '../util/not-found-error';
+import type { NpmManifest, PackageVersion, ResultProps } from '../types';
 
 export async function getResultProps(
     inputStr: string,
@@ -33,8 +34,8 @@ export async function getResultProps(
         pkgVersions.length > 1
             ? pkgVersions.map(p => tagToVersion[p.version || ''] || p.version).filter(notEmpty)
             : isFullRelease(version)
-            ? allVersions.filter(isFullRelease)
-            : allVersions;
+              ? allVersions.filter(isFullRelease)
+              : allVersions;
 
     const chartVersions = getVersionsForChart(filteredVersions, version, 7);
 
@@ -45,7 +46,6 @@ export async function getResultProps(
             cachedVersions[v] || {
                 name: name,
                 version: v,
-                publishDate: getPublishDate(manifest, v),
                 publishSize: 0,
                 installSize: 0,
                 publishFiles: 0,

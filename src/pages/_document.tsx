@@ -18,14 +18,38 @@ import Logo from '../components/Logo';
 import { fetchManifest } from '../util/npm-api';
 import { parsePackageString } from '../util/npm-parser';
 import { NotFoundError } from '../util/not-found-error';
+import type { NpmManifest, PackageVersion, ParsedUrlQuery } from '../types';
 
 const existingPaths = new Set(Object.values(pages));
 const logoSize = 108;
 const css = `
+:root {
+    --brand-color: #16864d;
+    --background: #fafafa;
+    --foreground: #18181b;
+    --muted: #e4e4e7;
+    --muted-foreground: #3f3f46;
+    --border: #d4d4d8;
+    --search-input: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --brand-color: #32de85;
+        --background: #09090b;
+        --foreground: #f4f4f5;
+        --muted: #27272a;
+        --muted-foreground: #d4d4d8;
+        --border: #3f3f46;
+        --search-input: #18181b;
+    }
+}
+
 body {
     margin: 0;
     padding: 0;
-    background: #fafafa;
+    background: var(--background);
+    color: var(--foreground);
     font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;    
 }
 
@@ -38,7 +62,7 @@ body {
 #spinwrap {
     display: none;
     height: 100vh;
-    background: #fafafa;
+    background: var(--background);
 }
 
 #spinner {
@@ -87,7 +111,7 @@ body {
 
 #sponsors:before {
     content: 'Sponsors';
-    color: #777;
+    color: var(--muted-foreground);
     font-weight: 300;
     padding-left: 25%;
 }
@@ -144,7 +168,6 @@ export async function renderPage(
                 <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png">
                 <link rel="manifest" href="/site.webmanifest">
                 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#33aa33">
-                <meta name="msapplication-TileColor" content="#333333">
                 <meta name="theme-color" content="#333333">
                 <meta property="og:title" content="${escapeHtml(title)}">
                 <meta property="og:image" content="https://${productionHostname}/logo.png">

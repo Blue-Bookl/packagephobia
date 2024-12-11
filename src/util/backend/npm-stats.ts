@@ -6,6 +6,7 @@ const mkdirAsync = promisify(mkdir);
 const writeFileAsync = promisify(writeFile);
 const execFileAsync = promisify(execFile);
 import { npmInstall, packageString } from './npm-wrapper';
+import type { PkgSize } from '../../types';
 
 // TODO: Can this be optimized by changing sync to async?
 export function getDirSize(root: string, seen: Set<number>): number {
@@ -26,17 +27,15 @@ export function getDirSize(root: string, seen: Set<number>): number {
         .reduce((acc, num) => acc + num, 0);
 }
 
-export async function calculatePackageSize(
-    name: string,
-    version: string,
-    publishDate: string,
-    tmpDir: string,
-) {
+export async function calculatePackageSize(name: string, version: string, tmpDir: string) {
     const tmpPackage = 'tmp-package' + Math.random();
 
-    let t = setTimeout(async () => {
-        await execFileAsync('rm', ['-rf', tmpPackage], { cwd: tmpDir });
-    }, 2 * 60 * 1000);
+    let t = setTimeout(
+        async () => {
+            await execFileAsync('rm', ['-rf', tmpPackage], { cwd: tmpDir });
+        },
+        2 * 60 * 1000,
+    );
 
     const pkgDir = join(tmpDir, tmpPackage);
     const cacheDir = join(tmpDir, 'cache');
@@ -52,7 +51,6 @@ export async function calculatePackageSize(
     const output: PkgSize = {
         name,
         version,
-        publishDate,
         publishSize,
         installSize,
         publishFiles: publishFiles.size,

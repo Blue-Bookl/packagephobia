@@ -1,19 +1,18 @@
-interface PackageVersion {
+export interface PackageVersion {
     name: string;
     version: string | null;
     scoped: boolean;
 }
 
-interface SizeWithUnit {
+export interface SizeWithUnit {
     size: string;
     unit: string;
     pretty: string;
 }
 
-interface PkgSize {
+export interface PkgSize {
     name: string;
     version: string;
-    publishDate: string;
     publishSize: number;
     installSize: number;
     publishFiles: number;
@@ -21,26 +20,26 @@ interface PkgSize {
     disabled?: boolean;
 }
 
-interface ApiResponseV1 {
+export interface ApiResponseV1 {
     publishSize: number;
     installSize: number;
 }
 
-interface ApiResponseV2 {
+export interface ApiResponseV2 {
     name: string;
     version: string;
     publish: ApiResponseSize;
     install: ApiResponseSize;
 }
 
-interface ApiResponseSize {
+export interface ApiResponseSize {
     bytes: number;
     files: number;
     pretty: string;
     color: string;
 }
 
-interface ResultProps {
+export interface ResultProps {
     pkgSize: PkgSize;
     readings: PkgSize[];
     cacheResult: boolean;
@@ -48,33 +47,33 @@ interface ResultProps {
     inputStr: string;
 }
 
-interface ComparePackage {
+export interface ComparePackage {
     pkgSize: PkgSize;
     cacheResult: boolean;
     isLatest: boolean;
 }
 
-interface CompareProps {
+export interface CompareProps {
     inputStr: string;
     results: ComparePackage[];
 }
 
-interface ParsedUrlQuery {
+export interface ParsedUrlQuery {
     [key: string]: string | string[] | undefined;
 }
 
-interface NpmManifest {
+export interface NpmManifest {
     name: string;
     description: string;
     versions: { [version: string]: any };
-    time: { [version: string]: string };
+    modified: string;
     'dist-tags': {
         latest: string;
         [tag: string]: string;
     };
 }
 
-interface PackageJson {
+export interface PackageJson {
     dependencies: {
         [key: string]: string;
     };

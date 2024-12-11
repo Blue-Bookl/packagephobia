@@ -1,14 +1,15 @@
 import { badgen } from 'badgen';
-import { getReadableFileSize, getHexColor } from './npm-parser';
+import { getReadableFileSize, getHexColor, color } from './npm-parser';
 import { pages, productionHostname } from '../util/constants';
+import type { ApiResponseSize, PkgSize } from '../types';
 
 export function getBadgeSvg(pkgSize: PkgSize) {
     const { installSize } = pkgSize;
     const { pretty } = getReadableFileSize(installSize);
     return badgen({
         label: 'install size',
-        status: pretty,
-        color: getHexColor(installSize),
+        status: installSize ? pretty : 'package not found',
+        color: installSize ? getHexColor(installSize) : color.red,
     });
 }
 
